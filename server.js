@@ -4,6 +4,7 @@ const path = require('path');
 
 const app = express(); // obtain the "app" object
 
+const contentService = require('./content-service');
 
 
 const HTTP_PORT = process.env.PORT || 1010; // assign a port
@@ -21,6 +22,14 @@ app.use(express.static('public'));
   app.get('/about', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/about.html'));
   });
+
+  app.get("/articles", (req, res) => {
+    res.json(articles);
+});
+
+app.get("/categories", (req, res) => {
+  res.json(categories)
+});
 
 
 // start the server on the port and output a confirmation to the console
