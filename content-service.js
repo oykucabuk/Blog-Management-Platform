@@ -1,5 +1,9 @@
+// Name: Oyku Cabuk
+// Student number: 149790230
+// Email: ocabuk@myseneca.ca
+// Date Created: 17 feb 2025
+// Date last modified: 17 feb 2025
 
-const { promises } = require("dns");
 const fs = require("fs");
 const path = require("path");
 
