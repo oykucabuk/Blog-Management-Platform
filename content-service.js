@@ -66,3 +66,10 @@ function getCategories() {
         }
         });
 }
+
+module.exports = {
+    initialize,
+    getPublishedArticles,
+    getAllArticles,
+    getCategories
+};

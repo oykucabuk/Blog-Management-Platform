@@ -11,6 +11,14 @@ const HTTP_PORT = process.env.PORT || 1010; // assign a port
 
 app.use(express.static('public'));
 
+contentService.initialize()
+  .then(() => {
+      app.listen(HTTP_PORT, () => { console.log(`Express server listening on: ${HTTP_PORT}`);});
+  })
+  .catch((err) => {
+      console.error('Initialization failed:', err);
+  });
+
 // app.get('/', (req, res) => {
 //     res.sendFile(path.join(__dirname, '/views/index.html'));
 //   });
@@ -23,15 +31,20 @@ app.use(express.static('public'));
     res.sendFile(path.join(__dirname, '/views/about.html'));
   });
 
+  
   app.get("/articles", (req, res) => {
-    res.json(articles);
+    contentService.getAllArticles()
+        .then(articles => res.json(articles))
+        .catch(err => res.json({ message: err }));
 });
 
 app.get("/categories", (req, res) => {
-  res.json(categories)
+  contentService.getCategories()
+  .then(categories => res.json(categories))
+  .catch(err => res.json({ message: err }));
 });
 
 
 // start the server on the port and output a confirmation to the console
-app.listen(HTTP_PORT, () => console.log(`Express server listening on: ${HTTP_PORT}`));
+//app.listen(HTTP_PORT, () => console.log(`Express server listening on: ${HTTP_PORT}`));
 
