@@ -5,6 +5,7 @@
     "content": "Researchers are discovering how music affects the brain, helping us to make sense of its real emotional and social power...",
     "author": "Jill Suttie",
     "published": true,
+    "minDateStr": "2015-12-01",
     "category": "Music"
     },
     {
@@ -13,6 +14,7 @@
     "content": "Playing sports is the best activity that has ever happened to me and it will be to people as well if they realize how pleasurable it is for a person’s life...",
     "author": "Arjan Mann",
     "published": true,
+    "minDateStr": "2020-12-01",
     "category": "Sport"
     }
 ]
