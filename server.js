@@ -127,9 +127,23 @@ app.get('/article/:id', (req, res) => {
 });
 
 app.get("/categories", (req, res) => {
-  contentService.getCategories()
-  .then(categories => res.json(categories))
-  .catch(err => res.json({ message: err }));
+    contentService.getCategories()
+        .then(categories => {
+            res.render("categories", {
+                title: "Categories",
+                path: req.path,
+                categories: categories,
+                errorMessage: null
+            });
+        })
+        .catch(err => {
+            res.render("categories", {
+                title: "Categories",
+                path: req.path,
+                categories: [],
+                errorMessage: err
+            });
+        });
 });
 
 app.get('/articles/add', (req, res) => {
