@@ -12,6 +12,8 @@ const app = express(); // obtain the "app" object
 
 const contentService = require('./content-service');
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 const HTTP_PORT = process.env.PORT || 1010; // assign a port
 
@@ -48,7 +50,7 @@ contentService.initialize()
   });
 
   app.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/about.html'));
+    res.render('about');
   });
 
   
@@ -87,7 +89,7 @@ app.get("/categories", (req, res) => {
 });
 
 app.get('/articles/add', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/addArticle.html'));
+    res.render('addArticle');
 });
 
 app.post('/articles/add', upload.single("featureImage"), (req, res) => {
