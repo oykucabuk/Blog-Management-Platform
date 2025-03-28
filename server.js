@@ -59,23 +59,67 @@ contentService.initialize()
 //         .then(articles => res.json(articles))
 //         .catch(err => res.json({ message: err }));
 // });
-app.get("/articles", (req, res) => {
-  let { category, minDate } = req.query;
+// app.get("/articles", (req, res) => {
+//   let { category, minDate } = req.query;
 
-  if (category) {
+//   if (category) {
+//       contentService.getArticlesByCategory(category)
+//           .then(articles => res.json(articles))
+//           .catch(err => res.status(404).json({ message: err }));
+//   } else if (minDate) {
+//       contentService.getArticlesByMinDate(minDate)
+//           .then(articles => res.json(articles))
+//           .catch(err => res.status(404).json({ message: err }));
+//   } else {
+//       contentService.getAllArticles()
+//           .then(articles => res.json(articles))
+//           .catch(err => res.status(404).json({ message: err }));
+//   }
+// });
+app.get("/articles", (req, res) => {
+    let { category, minDate } = req.query;
+  
+    const renderData = {
+      title: "Articles",
+      path: req.path,
+      articles: [],
+      errorMessage: null
+    };
+  
+    if (category) {
       contentService.getArticlesByCategory(category)
-          .then(articles => res.json(articles))
-          .catch(err => res.status(404).json({ message: err }));
-  } else if (minDate) {
+        .then(articles => {
+          renderData.articles = articles;
+          res.render("articles", renderData);
+        })
+        .catch(err => {
+          renderData.errorMessage = err;
+          res.render("articles", renderData);
+        });
+  
+    } else if (minDate) {
       contentService.getArticlesByMinDate(minDate)
-          .then(articles => res.json(articles))
-          .catch(err => res.status(404).json({ message: err }));
-  } else {
+        .then(articles => {
+          renderData.articles = articles;
+          res.render("articles", renderData);
+        })
+        .catch(err => {
+          renderData.errorMessage = err;
+          res.render("articles", renderData);
+        });
+  
+    } else {
       contentService.getAllArticles()
-          .then(articles => res.json(articles))
-          .catch(err => res.status(404).json({ message: err }));
-  }
-});
+        .then(articles => {
+          renderData.articles = articles;
+          res.render("articles", renderData);
+        })
+        .catch(err => {
+          renderData.errorMessage = err;
+          res.render("articles", renderData);
+        });
+    }
+  });
 app.get('/article/:id', (req, res) => {
   contentService.getArticleById(req.params.id)
       .then(article => res.json(article))
