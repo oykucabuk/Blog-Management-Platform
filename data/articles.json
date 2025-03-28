@@ -6,7 +6,7 @@
     "author": "Jill Suttie",
     "published": true,
     "minDateStr": "2015-12-01",
-    "category": "Music"
+    "category": 1
     },
     {
     "id": 2,
@@ -15,6 +15,6 @@
     "author": "Arjan Mann",
     "published": true,
     "minDateStr": "2020-12-01",
-    "category": "Sport"
+    "category": 2
     }
 ]

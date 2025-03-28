@@ -39,6 +39,10 @@ function initialize() {
     });
   });
 }
+function getCategoryNameById(categoryId) {
+    const category = categories.find(cat => cat.id == categoryId);
+    return category ? category.name : "Unknown";
+}
 
 function getPublishedArticles(){
     return new Promise((resolve, reject) => {
@@ -51,10 +55,14 @@ function getPublishedArticles(){
     });
 }
 
-function getAllArticles(){
+function getAllArticles() {
     return new Promise((resolve, reject) => {
         if (articles.length > 0) {
-            resolve(articles);
+            const articlesWithCategory = articles.map(article => ({
+                ...article,
+                categoryName: getCategoryNameById(article.category) 
+            }));
+            resolve(articlesWithCategory);
         } else {
             reject("No articles found");
         }
@@ -80,13 +88,20 @@ function addArticle(articleData){
     });
 };
 
-function getArticlesByCategory(category) {
+
+function getArticlesByCategory(categoryId) {
     return new Promise((resolve, reject) => {
-        const filteredArticles = articles.filter(article => article.category == category);
+        const filteredArticles = articles
+            .filter(article => article.category == categoryId)
+            .map(article => ({
+                ...article,
+                categoryName: getCategoryNameById(article.category) 
+            }));
+        
         if (filteredArticles.length > 0) resolve(filteredArticles);
         else reject("no results returned");
     });
-};
+}
 
 function getArticlesByMinDate(minDateStr) {
     return new Promise((resolve, reject) => {
@@ -115,5 +130,6 @@ module.exports = {
     addArticle,
     getArticlesByCategory,
     getArticlesByMinDate,
-    getArticleById
+    getArticleById,
+    getCategoryNameById
 };
