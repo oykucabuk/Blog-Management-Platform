@@ -4,7 +4,7 @@
 - **Name**:  Oyku Cabuk
 - **Student ID**: 149790230
 - **Class**: ocabuk@myseneca.ca 
-- **Date**: 17 Feb 2025  
+- **Date**: 28 march 2025  
 - **GitHub Repository**:  https://github.com/oykucabuk/web322_assignment  
 -**Vercel**:https://web322-assignment-ashen.vercel.app/
             https://web322-assignment-oykucabuks-projects.vercel.app/
@@ -12,7 +12,7 @@
 
 ---
 
-A basic Node.js application using Express.js for a simple website with two pages. This project demonstrates a foundational understanding of server setup and routing.
+A basic Node.js application using Express.js for a simple website with two pages. This project demonstrates a foundational understanding of server setup and routing.The static HTML structure was replaced with EJS templating and Articles now link to real category names sourced from categories.json.Users can click article titles to explore dedicated pages with full content.The "Add Article" form was upgraded to dynamically to include catagories instead of hardcoded.  
 
 ---
 
@@ -38,18 +38,17 @@ A basic Node.js application using Express.js for a simple website with two pages
 
 ---
 
-## Usage
-
-After starting the server, you can access the following pages:
-
-- **Home Page**: `http://localhost:1010`  
-  The main landing page of the application.
-- **About Page**: `http://localhost:1010/about`  
-  A page with information about the application or developer.
-**Articles Page**: `http://localhost:1010/articles`  
-  The main landing page of the application.
-- **Categories Page**: `http://localhost:1010/categories`  
-  A page with information about the application or developer.
+## Usage  
+Access these routes after starting the server:  
+- **Articles Page**: `/articles`  
+  - Filter articles by category or date.  
+  - Click titles to view individual articles.  
+- **Categories Page**: `/categories`  
+  - View all categories from `categories.json`.  
+- **Add Article**: `/articles/add`  
+  - Submit new articles with dynamic category dropdowns.  
+- **Individual Article**: `/article/:id`  
+  - Shows full article content and featured images (if available).  
 
 ---
 
