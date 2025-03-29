@@ -27,31 +27,6 @@
 </head>
 <hr>
 <body>
-    <!-- <div class="row"> -->
-      <!-- <form action="/articles/add" method="POST" enctype="multipart/form-data">
-        <label>Title:</label>
-        <input type="text" name="title" required>
-    
-        <label for = "category">Category:</label>
-        <select name="category" id="category" required>
-          <option value="sport">Sport</option>
-          <option value="music">Music</option>
-        </select>
-    
-        <label>Article Content:</label>
-        <textarea name="content" required></textarea>
-
-        <label>Author:</label>
-        <input type="text" name="author" required>
-
-        <label>Feature Image:</label>
-        <input type="file" name="featureImage">
-    
-        <label>Published:</label>
-        <input type="checkbox" name="published">
-    
-        <button type="submit">Add Article</button>
-    </form> -->
     <form method="post" action="/articles/add" enctype="multipart/form-data">
       <fieldset>
         <legend>Feature Image</legend>
@@ -82,8 +57,8 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <label for="Author">Author:</label>
-              <input class="form-control" id="Author" name="Author" type="text" />
+              <label for="author">Author:</label>
+              <input class="form-control" id="author" name="author" type="text" />
             </div>
           </div>
         </div>
@@ -91,7 +66,7 @@
           <div class="col-md-12">
               <div class="form-group">
                   <label for="minDateStr">Date:</label>
-                  <input class="form-control" id="date" name="date" type="date" />
+                  <input class="form-control" id="minDateStr" name="minDateStr" type="date" />
               </div>
           </div>
       </div>
@@ -101,8 +76,8 @@
               <label for="content">Content:</label>
               <textarea
                 class="form-control"
-                id="body"
-                name="body"
+                id="content"
+                name="content"
                 rows="15"
               ></textarea>
             </div>
@@ -113,8 +88,13 @@
             <div class="form-group">
               <label for="category">Category:</label>
               <select class="form-control" name="category" id="category">
-                <option value="1">Sport</option>
-                <option value="2">Music</option>
+                <% if (categories && categories.length > 0) { %>
+                  <% categories.forEach(category => { %>
+                      <option value="<%= category.id %>"><%= category.name %></option>
+                  <% }); %>
+              <% } else { %>
+                  <option value="">No categories available</option>
+              <% } %>
               </select>
             </div>
           </div>

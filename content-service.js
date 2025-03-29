@@ -112,14 +112,20 @@ function getArticlesByMinDate(minDateStr) {
     });
 };
 
-function getArticleById (id) {
+function getArticleById(id) {
     return new Promise((resolve, reject) => {
         const foundArticle = articles.find(article => article.id == id);
-        if (foundArticle) resolve(foundArticle);
-        else reject("no result returned");
+        if (foundArticle) {
+            const articleWithCategory = {
+                ...foundArticle,
+                categoryName: getCategoryNameById(foundArticle.category)
+            };
+            resolve(articleWithCategory);
+        } else {
+            reject("no result returned");
+        }
     });
-};
-
+}
 
 
 module.exports = {

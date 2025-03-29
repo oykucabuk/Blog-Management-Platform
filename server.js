@@ -41,9 +41,6 @@ contentService.initialize()
       console.error('Initialization failed:', err);
   });
 
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, '/views/index.html'));
-//   });
 
   app.get('/', (req, res) => {
     res.redirect('/about');
@@ -53,29 +50,7 @@ contentService.initialize()
     res.render('about');
   });
 
-  
-//   app.get("/articles", (req, res) => {
-//     contentService.getAllArticles()
-//         .then(articles => res.json(articles))
-//         .catch(err => res.json({ message: err }));
-// });
-// app.get("/articles", (req, res) => {
-//   let { category, minDate } = req.query;
 
-//   if (category) {
-//       contentService.getArticlesByCategory(category)
-//           .then(articles => res.json(articles))
-//           .catch(err => res.status(404).json({ message: err }));
-//   } else if (minDate) {
-//       contentService.getArticlesByMinDate(minDate)
-//           .then(articles => res.json(articles))
-//           .catch(err => res.status(404).json({ message: err }));
-//   } else {
-//       contentService.getAllArticles()
-//           .then(articles => res.json(articles))
-//           .catch(err => res.status(404).json({ message: err }));
-//   }
-// });
 app.get("/articles", (req, res) => {
     let { category, minDate } = req.query;
   
@@ -121,9 +96,28 @@ app.get("/articles", (req, res) => {
     }
   });
 app.get('/article/:id', (req, res) => {
-  contentService.getArticleById(req.params.id)
-      .then(article => res.json(article))
-      .catch(err => res.status(404).json({ message: err }));
+    contentService.getArticleById(req.params.id)
+        .then(article => {
+            if (!article.published) {
+                res.status(404).render('404', { 
+                    title: "404 - Not Found",
+                    path: req.path 
+                });
+            } else {
+                res.render('article', {
+                    title: article.title,
+                    path: '/articles',
+                    article: article,
+                    errorMessage: null
+                });
+            }
+        })
+        .catch(err => {
+            res.status(404).render('404', { 
+                title: "404 - Not Found",
+                path: req.path 
+            });
+        });
 });
 
 app.get("/categories", (req, res) => {
@@ -146,8 +140,14 @@ app.get("/categories", (req, res) => {
         });
 });
 
-app.get('/articles/add', (req, res) => {
-    res.render('addArticle');
+app.get("/articles/add", (req, res) => {
+    contentService.getCategories()
+        .then(categories => {
+            res.render("addArticle", { categories });
+        })
+        .catch(err => {
+            res.render("addArticle", { categories: [] });
+        });
 });
 
 app.post('/articles/add', upload.single("featureImage"), (req, res) => {
